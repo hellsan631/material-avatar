@@ -59,7 +59,7 @@
   }
 
   function _getTextColor(backgroundColor){
-    var _hexColor = _hexToRgb(backgroundColor)
+    var _hexColor = _hexToRgb(backgroundColor);
     var _colorValue = (parseInt(_hexColor.r) * 299) + (parseInt(_hexColor.g) * 587) + (parseInt(_hexColor.b) * 114);
     var _check = Math.round(_colorValue/1000);
 

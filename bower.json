@@ -1,0 +1,31 @@
+{
+  "name": "material-avatar",
+  "version": "0.1.0",
+  "homepage": "http://hellsan631.github.io/material-avatar/",
+  "authors": [
+    "Mathew Kleppin <mathew.kleppin@gmail.com>"
+  ],
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hellsan631/material-avatar.git"
+  },
+  "main": [
+    "material-avatar.js",
+    "material-avatar.css"
+  ],
+  "ignore": [
+    ".jshintrc",
+    ".editorconfig",
+    ".sass-cache",
+    "npm-debug.log",
+    "sample",
+    "node_modules",
+    "bower_components"
+  ],
+  "keywords": [],
+  "license": "MIT",
+  "devDependencies": {
+    "randomcolor": "~0.4.0"
+  }
+}

@@ -1,0 +1,18 @@
+.row {
+  display: block;
+  padding: 0em 3em;
+  width: auto;
+}
+
+.col {
+  display:inline-block;
+  margin: 2em;
+}
+
+.center-align: {
+  text-align: center;
+}
+
+.md-avatar {
+  display:inline-block;
+}

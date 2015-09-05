@@ -5,7 +5,6 @@
    * @param element - The element(s) to apply the material avatar look to
    */
   function MaterialAvatar(elements, options) {
-
     if (elements[0]) {
       elements = [].slice.call(elements);
 
@@ -14,53 +13,83 @@
       _createCanvas(elements);
     }
 
+    return elements;
   }
 
-  function _createCanvas(element){
-    var _name = element.getAttribute('data-name') || element.innerHTML.replace(/\W/g, '');
+  function _createCanvas(element) {
+    var canvas        = doc.createElement('canvas');
+    var initials;
+    var width;
+    var height;
+
+    //Initials first because we are removing the inside of our element (innerHTML)
+    //and replacing it with our canvas.
+    initials = _getInitials(element);
+
+    element.innerHTML = '';
+
+    requestAnimationFrame(function(){
+      width   = parseInt(element.offsetWidth, 10);
+      height  = parseInt(element.offsetHeight, 10);
+
+      canvas.setAttribute('width', width);
+      canvas.setAttribute('height', height);
+
+      _fillCanvas(element, canvas, width, height, initials);
+    });
+  }
+
+  function _getInitials(element) {
+    var _name = element.getAttribute('data-name') || element.innerHTML.trim();
     var _nameSplit = _name.split(' ');
-    var _canvas = doc.createElement('canvas');
     var _initials;
 
+    element.setAttribute('data-name', _name);
+
     //Get initials from name
-    if(_nameSplit.length > 1){
+    if (_nameSplit.length > 1) {
       _initials = _nameSplit[0].charAt(0).toUpperCase() + _nameSplit[1].charAt(0).toUpperCase();
-    }else{
+    } else {
       _initials = _nameSplit[0].charAt(0).toUpperCase();
     }
 
-    element.setAttribute('data-name', _name);
-    element.innerHTML = '';
-    element.appendChild(_canvas);
+    return _initials;
+  }
 
-    var _context = _canvas.getContext('2d');
+  function _getFontSize(canvas, height, initials) {
+    var _fontSize = height/((initials.length*0.5) + 1);
 
-    var _canvasWidth = parseInt(_canvas.parentNode.offsetHeight, 10);
-    var _canvasHeight = parseInt(_canvas.parentNode.offsetWidth, 10);
-
-    _canvas.setAttribute('height', _canvasWidth);
-    _canvas.setAttribute('width', _canvasHeight);
-
-    var _fontSize = (_canvasHeight)/1.5;
-
-    if(_canvas.classList.contains('circle')){
+    if (canvas.classList.contains('circle')) {
       _fontSize = _fontSize/(3.1415926/2);
     }
 
-    var _textTop = (_canvasHeight / 2)+((_fontSize*0.68)/2);
+    return _fontSize;
+  }
 
-    _context.fillStyle = _generateColor(_initials.charCodeAt(0) - 65);
-    _context.fillRect (0, 0, _canvasWidth, _canvasHeight);
-    _context.font = _fontSize + 'px/0px Arial';
-    _context.textAlign = 'center';
-    _context.fillStyle = _getTextColor(_context.fillStyle);
-    _context.fillText(_initials, _canvasWidth / 2, _textTop);
+  function _fillCanvas(element, canvas, width, height, initials) {
+    var _fontSize         = _getFontSize(canvas, height, initials);
+    var _backgroundColor  = _generateColor(initials.charCodeAt(0) - 65);
 
+    var _context          = canvas.getContext('2d');
+
+    //Create background
+    _context.fillStyle = _backgroundColor;
+    _context.fillRect(0, 0, width, height);
+
+    //Create our font styles
+    _context.font       = _fontSize + 'px/0px Arial';
+    _context.textAlign  = 'center';
+
+    //Create the color and add our initials
+    _context.fillStyle = _getTextColor(_backgroundColor);
+    _context.fillText(initials, width/2, (height / 2) + ((_fontSize*0.68)/2));
+
+    element.appendChild(canvas);
   }
 
   function _getTextColor(backgroundColor){
     var _hexColor = _hexToRgb(backgroundColor);
-    var _colorValue = (parseInt(_hexColor.r) * 299) + (parseInt(_hexColor.g) * 587) + (parseInt(_hexColor.b) * 114);
+    var _colorValue = (_hexColor.r * 299) + (_hexColor.g * 587) + (_hexColor.b * 114);
     var _check = Math.round(_colorValue/1000);
 
     return (_check > 125) ? '#222' : '#fff';
@@ -69,17 +98,24 @@
   function _hexToRgb(hex) {
     // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
     var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    var result;
+
     hex = hex.replace(shorthandRegex, function(m, r, g, b) {
-        return r + r + g + g + b + b;
+      return r + r + g + g + b + b;
     });
 
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
+    result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
+    if (result) {
+      return {
         r: parseInt(result[1], 16),
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
-    } : null;
-}
+      };
+    }
+
+    return null;
+  }
 
   function _generateColor(index, options) {
     var defaults = [
@@ -92,7 +128,8 @@
         '#7f8c8d'
       ];
 
-    if(randomColor) {
+    //Uses the randomColor generator - https://github.com/davidmerfield/randomColor
+    if(randomColor && options && options.randomcolor) {
       return randomColor(options);
     }
 

@@ -24,11 +24,6 @@
     var width;
     var height;
 
-    //Initials first because we will be removing the inside of our
-    //element (innerHTML) and replacing it with our canvas.
-    initials = _getInitials(element);
-    element.innerHTML = '';
-
     //Push our reflows to a new animation frame.
     requestAnimationFrame(function() {
       width   = parseInt(element.offsetWidth, 10);
@@ -37,12 +32,13 @@
       canvas.setAttribute('width', width);
       canvas.setAttribute('height', height);
 
-      _fillCanvas(element, canvas, width, height, initials);
+      _fillCanvas(element, canvas, width, height);
     });
   }
 
-  function _fillCanvas(element, canvas, width, height, initials) {
-    var _fontSize         = _getFontSize(canvas, height, initials);
+  function _fillCanvas(element, canvas, width, height) {
+    var _initials         = _getInitials(element);
+    var _fontSize         = _getFontSize(canvas, height, _initials);
     var _backgroundColor  = _generateColor(initials.charCodeAt(0) - 65);
 
     var _context          = canvas.getContext('2d');
@@ -57,8 +53,9 @@
 
     //Create the color and add our initials
     _context.fillStyle = _getTextColor(_backgroundColor);
-    _context.fillText(initials, width/2, (height / 2) + ((_fontSize*0.68)/2));
+    _context.fillText(_initials, width/2, (height / 2) + ((_fontSize*0.68)/2));
 
+    element.innerHTML = '';
     element.appendChild(canvas);
   }
 

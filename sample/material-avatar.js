@@ -1,4 +1,4 @@
-;(function(win, doc, randomcolor) {
+;(function(win, doc) {
 
   var options;
 
@@ -7,7 +7,6 @@
    * @param element - The element(s) to apply the material avatar look to
    */
   function MaterialAvatar(elements, opts) {
-
     options = opts;
 
     if (elements[0]) {
@@ -24,15 +23,12 @@
   }
 
   function _createCanvas(element) {
-    var canvas        = doc.createElement('canvas');
-    var initials;
-    var width;
-    var height;
+    var canvas = doc.createElement('canvas');
 
     //Push our reflows to a new animation frame.
     requestAnimationFrame(function() {
-      width   = parseInt(element.offsetWidth, 10);
-      height  = parseInt(element.offsetHeight, 10);
+      var width   = parseInt(element.offsetWidth, 10);
+      var height  = parseInt(element.offsetHeight, 10);
 
       canvas.setAttribute('width', width);
       canvas.setAttribute('height', height);
@@ -131,11 +127,11 @@
       ];
 
     //Uses the randomColor generator - https://github.com/davidmerfield/randomColor
-    if (randomcolor) {
-      if (options && !options.randomcolor) {
-
-      } else {
-        return randomcolor(options);
+    if (randomColor) {
+      if (options && options.randomColor) {
+        return randomColor(options.randomColor);
+      } else if (!options) {
+        return randomColor();
       }
     }
 
@@ -144,4 +140,4 @@
 
   // export
   win.MaterialAvatar = MaterialAvatar;
-})(window, document, randomColor);
+})(window, document);

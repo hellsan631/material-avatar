@@ -1,5 +1,5 @@
 languages:
    JavaScript: true
 exclude_paths:
-- "sample"
+- "sample/material-avatar.js"
 - "material-avatar.min.js"

@@ -6,6 +6,8 @@
    */
   function MaterialAvatar(elements, options) {
     if (elements[0]) {
+
+      //Turn our HTMLCollection into an array so we can iterate through it.
       elements = [].slice.call(elements);
 
       elements.forEach(_createCanvas);
@@ -22,13 +24,13 @@
     var width;
     var height;
 
-    //Initials first because we are removing the inside of our element (innerHTML)
-    //and replacing it with our canvas.
+    //Initials first because we will be removing the inside of our
+    //element (innerHTML) and replacing it with our canvas.
     initials = _getInitials(element);
-
     element.innerHTML = '';
 
-    requestAnimationFrame(function(){
+    //Push our reflows to a new animation frame.
+    requestAnimationFrame(function() {
       width   = parseInt(element.offsetWidth, 10);
       height  = parseInt(element.offsetHeight, 10);
 
@@ -37,6 +39,27 @@
 
       _fillCanvas(element, canvas, width, height, initials);
     });
+  }
+
+  function _fillCanvas(element, canvas, width, height, initials) {
+    var _fontSize         = _getFontSize(canvas, height, initials);
+    var _backgroundColor  = _generateColor(initials.charCodeAt(0) - 65);
+
+    var _context          = canvas.getContext('2d');
+
+    //Create background
+    _context.fillStyle = _backgroundColor;
+    _context.fillRect(0, 0, width, height);
+
+    //Create our font styles
+    _context.font       = _fontSize + 'px/0px Arial';
+    _context.textAlign  = 'center';
+
+    //Create the color and add our initials
+    _context.fillStyle = _getTextColor(_backgroundColor);
+    _context.fillText(initials, width/2, (height / 2) + ((_fontSize*0.68)/2));
+
+    element.appendChild(canvas);
   }
 
   function _getInitials(element) {
@@ -66,41 +89,18 @@
     return _fontSize;
   }
 
-  function _fillCanvas(element, canvas, width, height, initials) {
-    var _fontSize         = _getFontSize(canvas, height, initials);
-    var _backgroundColor  = _generateColor(initials.charCodeAt(0) - 65);
-
-    var _context          = canvas.getContext('2d');
-
-    //Create background
-    _context.fillStyle = _backgroundColor;
-    _context.fillRect(0, 0, width, height);
-
-    //Create our font styles
-    _context.font       = _fontSize + 'px/0px Arial';
-    _context.textAlign  = 'center';
-
-    //Create the color and add our initials
-    _context.fillStyle = _getTextColor(_backgroundColor);
-    _context.fillText(initials, width/2, (height / 2) + ((_fontSize*0.68)/2));
-
-    element.appendChild(canvas);
-  }
-
-  function _getTextColor(backgroundColor){
-    var _hexColor = _hexToRgb(backgroundColor);
+  function _getTextColor(backgroundColor) {
+    var _hexColor   = _hexToRgb(backgroundColor);
     var _colorValue = (_hexColor.r * 299) + (_hexColor.g * 587) + (_hexColor.b * 114);
-    var _check = Math.round(_colorValue/1000);
 
-    return (_check > 125) ? '#222' : '#fff';
+    return (Math.round(_colorValue/1000) > 125) ? '#222' : '#fff';
   }
 
   function _hexToRgb(hex) {
-    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     var result;
 
-    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    hex = hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, function(m, r, g, b) {
       return r + r + g + g + b + b;
     });
 
@@ -129,12 +129,11 @@
       ];
 
     //Uses the randomColor generator - https://github.com/davidmerfield/randomColor
-    if(randomColor && options && options.randomcolor) {
+    if (randomColor && options && options.randomcolor) {
       return randomColor(options);
     }
 
     return defaults[index % defaults.length];
-
   }
 
   // export

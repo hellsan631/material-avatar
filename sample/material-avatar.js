@@ -1,10 +1,15 @@
-;(function(win, doc) {
+;(function(win, doc, randomcolor) {
+
+  var options;
 
   /**
    * Main function to create material avatars
    * @param element - The element(s) to apply the material avatar look to
    */
-  function MaterialAvatar(elements, options) {
+  function MaterialAvatar(elements, opts) {
+
+    options = opts;
+
     if (elements[0]) {
 
       //Turn our HTMLCollection into an array so we can iterate through it.
@@ -39,7 +44,7 @@
   function _fillCanvas(element, canvas, width, height) {
     var _initials         = _getInitials(element);
     var _fontSize         = _getFontSize(canvas, height, _initials);
-    var _backgroundColor  = _generateColor(initials.charCodeAt(0) - 65);
+    var _backgroundColor  = _generateColor(_initials.charCodeAt(0) - 65);
 
     var _context          = canvas.getContext('2d');
 
@@ -114,7 +119,7 @@
     return null;
   }
 
-  function _generateColor(index, options) {
+  function _generateColor(index) {
     var defaults = [
         '#1abc9c', '#2ecc71', '#3498db',
         '#9b59b6', '#34495e', '#16a085',
@@ -126,8 +131,12 @@
       ];
 
     //Uses the randomColor generator - https://github.com/davidmerfield/randomColor
-    if (randomColor && options && options.randomcolor) {
-      return randomColor(options);
+    if (randomcolor) {
+      if (options && !options.randomcolor) {
+
+      } else {
+        return randomcolor(options);
+      }
     }
 
     return defaults[index % defaults.length];
@@ -135,4 +144,4 @@
 
   // export
   win.MaterialAvatar = MaterialAvatar;
-})(window, document);
+})(window, document, randomColor);

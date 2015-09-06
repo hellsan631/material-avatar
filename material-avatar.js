@@ -48,30 +48,24 @@
       _this.canvas.setAttribute('width', _this.width);
       _this.canvas.setAttribute('height', _this.width);
 
-      _this.render();
+      _this.initials         = _this.getInitials();
+      _this.fontSize         = _this.getFontSize();
+
+      _this.fillCanvas();
     });
   }
 
-  Avatar.prototype.render = function() {
-    this.initials         = this.getInitials();
-    this.fontSize         = this.getFontSize();
-    this.backgroundColor  = this.generateColor(this.initials.charCodeAt(0) - 65);
+  Avatar.prototype.fillCanvas = function() {
+    this.context            = this.canvas.getContext('2d');
 
-    this.context          = this.canvas.getContext('2d');
+    //Create background
+    this.backgroundColor    = this.generateColor(this.initials.charCodeAt(0) - 65);
+    this.context.fillStyle  = this.backgroundColor;
+    this.context.fillRect(0, 0, this.width, this.height);
 
     //Create our font styles
     this.context.font       = this.fontSize + 'px/0px Arial';
     this.context.textAlign  = 'center';
-
-    if (this.options) {
-      if(this.options.shape === 'circle') {
-        this._drawCircle();
-      } else {
-        this._drawSquare();
-      }
-    } else {
-      this._drawSquare();
-    }
 
     //Create the color and add our initials
     this.context.fillStyle  = this.getTextColor();
@@ -84,24 +78,6 @@
     //remove the inner text and swap in the canvas elemnt
     this.element.innerHTML  = '';
     this.element.appendChild(this.canvas);
-  };
-
-  //Creates circle background area
-  Avatar.prototype._drawCircle = function() {
-    var centerX = this.width  / 2;
-    var centerY = this.height / 2;
-    var radius  = this.width  / 2;
-
-    this.context.beginPath();
-    this.context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-    this.context.fillStyle  = this.backgroundColor;
-    this.context.fill();
-  };
-
-  //Creates square background area
-  Avatar.prototype._drawSquare = function() {
-    this.context.fillStyle  = this.backgroundColor;
-    this.context.fillRect(0, 0, this.width, this.height);
   };
 
   Avatar.prototype.getInitials = function () {

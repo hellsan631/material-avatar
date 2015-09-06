@@ -6,20 +6,14 @@
 
 .col {
   display:inline-block;
-  margin: 2em;
+  margin: 1em;
 }
 
 .center-align: {
   text-align: center;
 }
 
-.md-avatar {
-  display:inline-block;
-  width: 200px;
-  height: 200px;
-}
-
-.md-avatar-circle {
+.md-avatar, .md-avatar-circle, #avatar{
   display:inline-block;
   width: 200px;
   height: 200px;

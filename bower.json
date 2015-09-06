@@ -12,7 +12,7 @@
   },
   "main": [
     "material-avatar.js",
-    "material-avatar.min.js",
+    "material-avatar.min.js"
   ],
   "ignore": [
     ".jshintrc",
@@ -23,7 +23,16 @@
     "node_modules",
     "bower_components"
   ],
-  "keywords": [],
+  "keywords": [
+    "avatar",
+    "material",
+    "canvas",
+    "javascript",
+    "vanilla",
+    "google",
+    "initials",
+    "html5"
+  ],
   "license": "MIT",
   "devDependencies": {
     "randomcolor": "~0.4.0"

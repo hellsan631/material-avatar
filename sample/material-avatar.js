@@ -1,71 +1,91 @@
 ;(function(win, doc) {
 
-  var options;
-
   /**
    * Main function to create material avatars
    * @param element - The element(s) to apply the material avatar look to
    */
-  function MaterialAvatar(elements, opts) {
-    options = opts;
+  function MaterialAvatar(elements, options) {
+    this.options = options;
+    this.elements = elements;
+    var _this = this;
 
-    if (elements[0]) {
+    if (this.elements[0]) {
 
       //Turn our HTMLCollection into an array so we can iterate through it.
-      elements = [].slice.call(elements);
+      this.elements = [].slice.call(this.elements);
 
-      elements.forEach(_createCanvas);
+      this.elements.forEach(function(element){
+        element.avatar = new Avatar(element, _this.options);
+      });
     } else {
-      _createCanvas(elements);
+      this.elements.avatar = new Avatar(elements, _this.options);
     }
-
-    return elements;
   }
 
-  function _createCanvas(element) {
-    var canvas = doc.createElement('canvas');
+  MaterialAvatar.prototype.updateOptions = function(options) {
+    var _this = this;
+
+    if (options) {
+      this.options = options;
+    }
+
+    this.elements.forEach(function(element){
+      element.avatar.options = _this.options;
+    });
+  };
+
+  function Avatar(element, options) {
+    var _this = this;
+    this.element  = element;
+    this.options  = options;
+    this.canvas   = doc.createElement('canvas');
 
     //Push our reflows to a new animation frame.
     requestAnimationFrame(function() {
-      var width   = parseInt(element.offsetWidth, 10);
-      var height  = parseInt(element.offsetHeight, 10);
+      _this.width   = parseInt(_this.element.offsetWidth, 10);
+      _this.height  = parseInt(_this.element.offsetHeight, 10);
 
-      canvas.setAttribute('width', width);
-      canvas.setAttribute('height', height);
+      _this.canvas.setAttribute('width', _this.width);
+      _this.canvas.setAttribute('height', _this.width);
 
-      _fillCanvas(element, canvas, width, height);
+      _this.fillCanvas();
     });
   }
 
-  function _fillCanvas(element, canvas, width, height) {
-    var _initials         = _getInitials(element);
-    var _fontSize         = _getFontSize(canvas, height, _initials);
-    var _backgroundColor  = _generateColor(_initials.charCodeAt(0) - 65);
+  Avatar.prototype.fillCanvas = function() {
+    this.initials         = this.getInitials();
+    this.fontSize         = this.getFontSize();
+    this.backgroundColor  = this.generateColor(this.initials.charCodeAt(0) - 65);
 
-    var _context          = canvas.getContext('2d');
+    this.context          = this.canvas.getContext('2d');
 
     //Create background
-    _context.fillStyle = _backgroundColor;
-    _context.fillRect(0, 0, width, height);
+    this.context.fillStyle  = this.backgroundColor;
+    this.context.fillRect(0, 0, this.width, this.height);
 
     //Create our font styles
-    _context.font       = _fontSize + 'px/0px Arial';
-    _context.textAlign  = 'center';
+    this.context.font       = this.fontSize + 'px/0px Arial';
+    this.context.textAlign  = 'center';
 
     //Create the color and add our initials
-    _context.fillStyle = _getTextColor(_backgroundColor);
-    _context.fillText(_initials, width/2, (height / 2) + ((_fontSize*0.68)/2));
+    this.context.fillStyle  = this.getTextColor();
+    this.context.fillText(
+      this.initials,
+      this.width/2,
+      (this.height / 2) + ((this.fontSize*0.68)/2)
+    );
 
-    element.innerHTML = '';
-    element.appendChild(canvas);
-  }
+    //remove the inner text and swap in the canvas elemnt
+    this.element.innerHTML  = '';
+    this.element.appendChild(this.canvas);
+  };
 
-  function _getInitials(element) {
-    var _name = element.getAttribute('data-name') || element.innerHTML.trim();
-    var _nameSplit = _name.split(' ');
+  Avatar.prototype.getInitials = function () {
+    this.name       = this.element.getAttribute('data-name') || this.element.innerHTML.trim();
+    var _nameSplit  = this.name.split(' ');
     var _initials;
 
-    element.setAttribute('data-name', _name);
+    this.element.setAttribute('data-name', this.name);
 
     //Get initials from name
     if (_nameSplit.length > 1) {
@@ -75,48 +95,48 @@
     }
 
     return _initials;
-  }
+  };
 
-  function _getFontSize(canvas, height, initials) {
-    var _fontSize = height/((initials.length*0.5) + 1);
+  Avatar.prototype.getFontSize = function () {
+    var _fontSize = this.height/((this.initials.length*0.5) + 1);
 
-    if (canvas.classList.contains('circle')) {
+    if (this.canvas.classList.contains('circle')) {
       _fontSize = _fontSize/(3.1415926/2);
     }
 
     return _fontSize;
-  }
+  };
 
-  function _getTextColor(backgroundColor) {
-    var _hexColor   = _hexToRgb(backgroundColor);
+  Avatar.prototype.getTextColor = function () {
+    var _hexColor   = this._hexToRgb(this.backgroundColor);
     var _colorValue = (_hexColor.r * 299) + (_hexColor.g * 587) + (_hexColor.b * 114);
 
     return (Math.round(_colorValue/1000) > 125) ? '#222' : '#fff';
-  }
+  };
 
-  function _hexToRgb(hex) {
-    var result;
+  Avatar.prototype._hexToRgb = function (hex) {
+    var _result;
 
     // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
     hex = hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, function(m, r, g, b) {
       return r + r + g + g + b + b;
     });
 
-    result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    _result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 
-    if (result) {
+    if (_result) {
       return {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
+        r: parseInt(_result[1], 16),
+        g: parseInt(_result[2], 16),
+        b: parseInt(_result[3], 16)
       };
     }
 
     return null;
-  }
+  };
 
-  function _generateColor(index) {
-    var defaults = [
+  Avatar.prototype.generateColor = function (index) {
+    var _defaults = [
         '#1abc9c', '#2ecc71', '#3498db',
         '#9b59b6', '#34495e', '#16a085',
         '#27ae60', '#2980b9', '#8e44ad',
@@ -128,16 +148,17 @@
 
     //Uses the randomColor generator - https://github.com/davidmerfield/randomColor
     if (randomColor) {
-      if (options && options.randomColor) {
-        return randomColor(options.randomColor);
-      } else if (!options) {
+      if (this.options && this.options.randomColor) {
+        return randomColor(this.options.randomColor);
+      } else if (!this.options) {
         return randomColor();
       }
     }
 
-    return defaults[index % defaults.length];
-  }
+    return _defaults[index % _defaults.length];
+  };
 
   // export
-  win.MaterialAvatar = MaterialAvatar;
+  win.MaterialAvatar  = MaterialAvatar;
+  win.Avatar          = Avatar;
 })(window, document);

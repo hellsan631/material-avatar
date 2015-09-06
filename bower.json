@@ -12,7 +12,7 @@
   },
   "main": [
     "material-avatar.js",
-    "material-avatar.css"
+    "material-avatar.min.js",
   ],
   "ignore": [
     ".jshintrc",

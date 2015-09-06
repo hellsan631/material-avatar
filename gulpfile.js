@@ -48,7 +48,7 @@ gulp.task('build', function() {
 gulp.task('serve', ['serve-watch'], function() {
 
   //watch .scss files
-	gulp.watch([src, 'material-avatar.css'], ['serve-watch']);
+	gulp.watch(src, ['serve-watch']);
 
   return gulp.src('sample')
     .pipe(webserver({
@@ -59,12 +59,6 @@ gulp.task('serve', ['serve-watch'], function() {
 });
 
 gulp.task('serve-watch', function(){
-  gulp.src('material-avatar.css')
-    .pipe(plumber({
-        errorHandler: onError
-    }))
-    .pipe(gulp.dest('sample'));
-
   return gulp.src(src)
     .pipe(plumber({
         errorHandler: onError

@@ -10,18 +10,18 @@
 
   <div class="row">
     <div class="col">
-      <div class="md-avatar">
+      <div class="md-avatar-circle">
         Batman
       </div>
     </div>
     <div class="col">
       <div class="md-avatar">
-        Material Avatar
+        Darkwing Duck
       </div>
     </div>
     <div class="col">
-      <div class="md-avatar">
-        Darkwing Duck
+      <div class="md-avatar-circle">
+        Material Avatar
       </div>
     </div>
     <div class="col">
@@ -34,7 +34,8 @@
   <script src="vendor/randomcolor/randomColor.js"></script>
   <script src="material-avatar.js"></script>
   <script defer async>
-    MaterialAvatar(document.getElementsByClassName('md-avatar'));
+    MaterialAvatar(document.getElementsByClassName('md-avatar-circle'), {shape: 'circle'});
+    MaterialAvatar(document.getElementsByClassName('md-avatar'), {});
   </script>
 
 </html>

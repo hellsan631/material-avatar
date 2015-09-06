@@ -48,21 +48,22 @@
       _this.canvas.setAttribute('width', _this.width);
       _this.canvas.setAttribute('height', _this.width);
 
+      _this.initials = _this.getInitials();
+      _this.fontSize = _this.getFontSize();
+
       _this.render();
     });
   }
 
   Avatar.prototype.render = function() {
-    this.initials         = this.getInitials();
-    this.fontSize         = this.getFontSize();
     this.backgroundColor  = this.generateColor(this.initials.charCodeAt(0) - 65);
-
     this.context          = this.canvas.getContext('2d');
 
     //Create our font styles
     this.context.font       = this.fontSize + 'px/0px Arial';
     this.context.textAlign  = 'center';
 
+    //Decide what type of shape we should draw for the background
     if (this.options) {
       if(this.options.shape === 'circle') {
         this._drawCircle();
@@ -81,7 +82,7 @@
       (this.height / 2) + ((this.fontSize*0.68)/2)
     );
 
-    //remove the inner text and swap in the canvas elemnt
+    //Remove the inner text and swap in the canvas elemnt
     this.element.innerHTML  = '';
     this.element.appendChild(this.canvas);
   };

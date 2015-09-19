@@ -5,7 +5,12 @@
    * @param element - The element(s) to apply the material avatar look to
    */
   function MaterialAvatar(elements, options) {
-    this.options = options;
+
+    if (!elements) {
+      throw(new Error('No elements selected/found'));
+    }
+
+    this.options = options || {};
     this.elements = elements;
     var _this = this;
 
@@ -35,6 +40,11 @@
   };
 
   function Avatar(element, options) {
+
+    if (!element) {
+      throw(new Error('No element selected/found'));
+    }
+
     var _this = this;
     this.element  = element;
     this.options  = options;
@@ -42,18 +52,22 @@
 
     //Push our reflows to a new animation frame.
     requestAnimationFrame(function() {
-      _this.width   = parseInt(_this.element.offsetWidth, 10);
-      _this.height  = parseInt(_this.element.offsetHeight, 10);
-
-      _this.canvas.setAttribute('width', _this.width);
-      _this.canvas.setAttribute('height', _this.width);
-
-      _this.initials = _this.getInitials();
-      _this.fontSize = _this.getFontSize();
-
-      _this.render();
+      return _this.init();
     });
   }
+
+  Avatar.prototype.init = function(){
+    this.width   = parseInt(this.element.offsetWidth, 10);
+    this.height  = parseInt(this.element.offsetHeight, 10);
+
+    this.canvas.setAttribute('width', this.width);
+    this.canvas.setAttribute('height', this.width);
+
+    this.initials = this.getInitials();
+    this.fontSize = this.getFontSize();
+
+    this.render();
+  };
 
   Avatar.prototype.render = function() {
     this.backgroundColor  = this.generateColor(this.initials.charCodeAt(0) - 65);
@@ -161,16 +175,23 @@
   };
 
   Avatar.prototype.generateColor = function (index) {
+
+    if (this.options.color) {
+      return this.options.color;
+    }
+
     var _defaults = [
-        '#303F9F', '#3F51B5', '#C5CAE9',
-        '#FFC107', '#727272',
-        '#00796B', '#009688', '#009688',
-        '#536DFE', '#FFA000', '#FFEB3B',
-        '#FFECB3'
+        '#1abc9c', '#2ecc71', '#3498db',
+        '#9b59b6', '#34495e', '#16a085',
+        '#27ae60', '#2980b9', '#8e44ad',
+        '#2c3e50', '#f1c40f', '#e67e22',
+        '#e74c3c', '#95a5a6', '#f39c12',
+        '#d35400', '#c0392b', '#bdc3c7',
+        '#7f8c8d'
       ];
 
     //Uses the randomColor generator - https://github.com/davidmerfield/randomColor
-    if (randomColor) {
+    if (typeof randomColor !== undefined) {
       if (this.options && this.options.randomColor) {
         return randomColor(this.options.randomColor);
       } else if (!this.options) {

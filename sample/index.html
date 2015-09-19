@@ -48,7 +48,7 @@
       </div>
     </div>
     <div class="col">
-      <div class="md-avatar">
+      <div id="avatar">
         A T
       </div>
     </div>
@@ -58,18 +58,19 @@
       </div>
     </div>
     <div class="col">
-      <div id="avatar">
+      <div id="custom">
         R
       </div>
     </div>
   </div>
 
-  <script src="vendor/randomcolor/randomColor.js"></script>
+  <script src="randomcolor/randomColor.js"></script>
   <script src="material-avatar.js"></script>
   <script defer async>
     MaterialAvatar(document.getElementsByClassName('md-avatar-circle'), {shape: 'circle'});
     MaterialAvatar(document.getElementsByClassName('md-avatar'), {randomColor: {hue: 'orange'}});
-    var avatar = new Avatar(document.getElementById('avatar'));
+    MaterialAvatar(document.getElementById('avatar'));
+    MaterialAvatar(document.getElementById('custom'), {color: '#f12a27'});
   </script>
 
 </html>

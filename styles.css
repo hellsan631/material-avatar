@@ -13,7 +13,7 @@
   text-align: center;
 }
 
-.md-avatar, .md-avatar-circle, #avatar{
+.md-avatar, .md-avatar-circle, #avatar, #custom{
   display:inline-block;
   width: 200px;
   height: 200px;

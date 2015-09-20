@@ -64,13 +64,14 @@
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="randomcolor/randomColor.js"></script>
   <script src="material-avatar.js"></script>
   <script defer async>
     MaterialAvatar(document.getElementsByClassName('md-avatar-circle'), {shape: 'circle'});
     MaterialAvatar(document.getElementsByClassName('md-avatar'), {randomColor: {hue: 'orange'}});
     MaterialAvatar(document.getElementById('avatar'));
-    MaterialAvatar(document.getElementById('custom'), {color: '#f12a27'});
+    $('#custom').materialAvatar({backgroundColor: '#f12a27', textColor: '#777'});
   </script>
 
 </html>

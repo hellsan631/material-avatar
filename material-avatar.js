@@ -10,7 +10,21 @@
       throw(new Error('No elements selected/found'));
     }
 
-    this.options = options || {};
+    this.options = {
+      colorPalette: [
+        '#1abc9c', '#2ecc71', '#3498db',
+        '#9b59b6', '#34495e', '#16a085',
+        '#27ae60', '#2980b9', '#8e44ad',
+        '#2c3e50', '#f1c40f', '#e67e22',
+        '#e74c3c', '#95a5a6', '#f39c12',
+        '#d35400', '#c0392b', '#bdc3c7',
+        '#7f8c8d'
+      ]
+    };
+
+    this.name = 'MaterialAvatar';
+
+    this.options.extend(options);
     this.elements = elements;
     var _this = this;
 
@@ -147,7 +161,17 @@
   };
 
   Avatar.prototype.getTextColor = function () {
+
+    //Override generated text color with a custom one
+    if (this.options.textColor) {
+      return this.options.textColor;
+    }
+
     var _hexColor   = this._hexToRgb(this.backgroundColor);
+
+    //Optional fallback incase our function returns null
+    if (!_hexColor) return '#222';
+
     var _colorValue = (_hexColor.r * 299) + (_hexColor.g * 587) + (_hexColor.b * 114);
 
     return (Math.round(_colorValue/1000) > 125) ? '#222' : '#fff';
@@ -176,19 +200,9 @@
 
   Avatar.prototype.generateColor = function (index) {
 
-    if (this.options.color) {
-      return this.options.color;
+    if (this.options.backgroundColor) {
+      return this.options.backgroundColor;
     }
-
-    var _defaults = [
-        '#1abc9c', '#2ecc71', '#3498db',
-        '#9b59b6', '#34495e', '#16a085',
-        '#27ae60', '#2980b9', '#8e44ad',
-        '#2c3e50', '#f1c40f', '#e67e22',
-        '#e74c3c', '#95a5a6', '#f39c12',
-        '#d35400', '#c0392b', '#bdc3c7',
-        '#7f8c8d'
-      ];
 
     //Uses the randomColor generator - https://github.com/davidmerfield/randomColor
     if (typeof randomColor !== undefined) {
@@ -199,10 +213,28 @@
       }
     }
 
-    return _defaults[index % _defaults.length];
+    return this.options.colorPalette[index % this.options.colorPalette.length];
   };
 
   // export
   win.MaterialAvatar  = MaterialAvatar;
-  win.Avatar          = Avatar;
+
+  if (jQuery && jQuery.fn) {
+    jQuery.fn.materialAvatar = function(options) {
+      return this.each(function() {
+        if (!jQuery.data(this, 'plugin_materialAvatar')) {
+          jQuery.data(this, 'plugin_materialAvatar', new MaterialAvatar(this, options));
+        }
+      });
+    };
+  }
+
+  Object.prototype.extend = function(obj) {
+    for (var i in obj) {
+      if (obj.hasOwnProperty(i)) {
+         this[i] = obj[i];
+      }
+    }
+  };
+
 })(window, document);

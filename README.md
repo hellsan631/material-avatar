@@ -3,6 +3,8 @@
 Simple material design avatars using canvas
 
 [![Code Climate](https://codeclimate.com/github/hellsan631/material-avatar/badges/gpa.svg)](https://codeclimate.com/github/hellsan631/material-avatar)
+[![License](http://img.shields.io/badge/License-MIT-blue.svg)](http://opensource.org/licenses/MIT) 
+1.33kb gziped!
 
 ====
 

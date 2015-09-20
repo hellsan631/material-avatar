@@ -8,7 +8,7 @@ Simple material design avatars using canvas
 
 ====
 
-Material-Avatar is non-opinionated, only has a few small features, and was built to solve a larger problem. _How can I generate a good looking default avatar for a user?_.
+Material-Avatar is non-opinionated and only has a few small features. It was built to solve a larger problem. _How can I generate a good looking default avatar for a user?_.
 
 I got asked this question once, and there are a lot of other more complex implimentations out there, using bits and bobs to calculate a pixelated image, or grab sets of images from places, or use other web services. I like the way google approached the problem, creating a simple image with initials text.
 

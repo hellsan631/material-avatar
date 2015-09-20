@@ -1,4 +1,4 @@
-![material-avatar](sample.png)
+<img src="sample.png" align="center" alt="Material Avatar" />
 
 Simple material design avatars using canvas
 
@@ -21,7 +21,7 @@ Material-Avatar uses HTML5 Canvas to fill an element with a random(ized) backgro
 1. Install using __npm__, __bower__, or __download__.
     ```bash
     npm install --save material-avatar
-    bower install --save  material-avatar
+    bower install --save material-avatar
     ```
 
     And include your scripts,
@@ -73,7 +73,22 @@ based on the background color (either '#222' or '#fff')
 An array of color hexes that can will be chosen from randomly as a fallback. Defaults can be found in
 the material-avatar.js file.
 
-[see sample](https://github.com/hellsan631/material-avatar/tree/master/sample) or [the live website](http://hellsan631.github.io/material-avatar/) for more details for now (going to expand on these a bit later).
+6. __fontSize__ _(number or function)_ <br/>
+An overriding size for font. This can either be a number, measured in px, or a function. If its a function,
+it will be sent two arguments, the height of the canvas, and the initials length, which can be used to
+return a calculated font size.
+
+7. __fontFamily__ "Arial" _(string)_ <br/>
+The chosen font family for generating the canvas initials font.
+
+8. __initials__ _(string)_ <br/>
+A string of characters used as the initials for the avatar.
+
+9. __name__ _(string)_ <br/>
+In addition to being able to use the data-name attribute, or the innerHtml of an element, you can also pass
+a name in the options, which will be broken down into the initial.
+
+[see sample](https://github.com/hellsan631/material-avatar/tree/master/sample) or [the live website](http://hellsan631.github.io/material-avatar/) for some examples.
 
 ### Development
 
@@ -89,3 +104,7 @@ __Before you push your changes, make sure to run the gulp build script__
 ```
 gulp build
 ```
+
+### License
+
+MIT

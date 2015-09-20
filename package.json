@@ -1,13 +1,25 @@
 {
   "name": "material-avatar",
-  "description": "",
-  "version": "0.2.0",
+  "description": "simple material design avatars using canvas",
+  "version": "0.3.0",
   "main": "material-avatar.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/hellsan631/material-avatar.git"
   },
   "keywords": [
+    "avatar",
+    "material",
+    "canvas",
+    "javascript",
+    "vanilla",
+    "google",
+    "initials",
+    "html5"
+    "design"
+    "icon",
+    "initials",
+    "jquery"
   ],
   "files": [
     "sample",

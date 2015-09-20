@@ -1,0 +1,42 @@
+{
+	"name": "materialAvatar",
+	"title": "Simple material design avatars using canvas",
+	"description": "Material Avatar creates nice looking avatars from initials using HTML5 canvas",
+	"keywords": [
+		"avatar",
+    "material",
+    "canvas",
+    "javascript",
+    "vanilla",
+    "google",
+    "initials",
+    "html5"
+    "design"
+    "icon",
+    "initials",
+    "jquery"
+	],
+	"version": "0.3.0",
+	"author": {
+		"name": "Mathew Kleppin",
+		"email": "mathew.kleppin@gmail.com",
+		"url": "https://github.com/hellsan631/"
+	},
+	"maintainers": [
+		{
+      "name": "Mathew Kleppin",
+      "email": "mathew.kleppin@gmail.com",
+      "url": "https://github.com/hellsan631/"
+		}
+	],
+	"licenses": [
+		{
+			"type": "MIT"
+		}
+	],
+	"bugs": "https://github.com/hellsan631/material-avatar/issues",
+  "homepage": "http://hellsan631.github.io/material-avatar/",
+  "docs": "https://github.com/hellsan631/material-avatar#readme",
+  "download": "https://github.com/hellsan631/material-avatar/archive/master.zip",
+	"dependencies": {}
+}

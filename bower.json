@@ -1,6 +1,7 @@
 {
   "name": "material-avatar",
-  "version": "0.2.0",
+  "description": "simple material design avatars using canvas",
+  "version": "0.3.0",
   "homepage": "http://hellsan631.github.io/material-avatar/",
   "authors": [
     "Mathew Kleppin <mathew.kleppin@gmail.com>"
@@ -32,6 +33,10 @@
     "google",
     "initials",
     "html5"
+    "design"
+    "icon",
+    "initials",
+    "jquery"
   ],
   "license": "MIT",
   "devDependencies": {

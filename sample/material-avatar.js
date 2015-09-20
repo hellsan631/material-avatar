@@ -19,7 +19,8 @@
         '#e74c3c', '#95a5a6', '#f39c12',
         '#d35400', '#c0392b', '#bdc3c7',
         '#7f8c8d'
-      ]
+      ],
+      fontFamily: 'Arial'
     };
 
     this.name = 'MaterialAvatar';
@@ -88,7 +89,7 @@
     this.context          = this.canvas.getContext('2d');
 
     //Create our font styles
-    this.context.font       = this.fontSize + 'px/0px Arial';
+    this.context.font       = this.fontSize + 'px/0px ' + this.options.fontFamily;
     this.context.textAlign  = 'center';
 
     //Decide what type of shape we should draw for the background
@@ -134,7 +135,12 @@
   };
 
   Avatar.prototype.getInitials = function () {
-    this.name       = this.element.getAttribute('data-name') || this.element.innerHTML.trim();
+
+    if (this.options.initials) {
+      return this.options.initials;
+    }
+
+    this.name       = this.options.name || this.element.getAttribute('data-name') || this.element.innerHTML.trim();
     var _nameSplit  = this.name.split(' ');
     var _initials;
 
@@ -151,11 +157,15 @@
   };
 
   Avatar.prototype.getFontSize = function () {
-    var _fontSize = this.height/((this.initials.length*0.5) + 1);
+    if (this.options.fontSize) {
+      if(typeof this.options.fontSize === 'function') {
+        return this.options.fontSize(this.height, this.initials.length);
+      }
 
-    if (this.canvas.classList.contains('circle')) {
-      _fontSize = _fontSize/(3.1415926/2);
+      return this.options.fontSize;
     }
+
+    var _fontSize = this.height/((this.initials.length*0.5) + 1);
 
     return _fontSize;
   };

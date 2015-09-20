@@ -3,3 +3,4 @@ languages:
 exclude_paths:
 - "sample/material-avatar.js"
 - "material-avatar.min.js"
+- "sample/randomcolor/randomColor.js"

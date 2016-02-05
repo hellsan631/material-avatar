@@ -85,7 +85,7 @@
   };
 
   Avatar.prototype.render = function() {
-    this.backgroundColor  = this.generateColor(this.initials.charCodeAt(0) - 65);
+    this.backgroundColor  = this.generateColor();
     this.context          = this.canvas.getContext('2d');
 
     //Create our font styles
@@ -208,7 +208,7 @@
     return null;
   };
 
-  Avatar.prototype.generateColor = function (index) {
+  Avatar.prototype.generateColor = function () {
 
     if (this.options.backgroundColor) {
       return this.options.backgroundColor;
@@ -223,7 +223,7 @@
       }
     }
 
-    return this.options.colorPalette[index % this.options.colorPalette.length];
+    return this.options.colorPalette[Math.floor(Math.random() * this.options.colorPalette.length)];
   };
 
   // export

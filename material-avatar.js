@@ -26,7 +26,9 @@
     this.name = 'MaterialAvatar';
 
     for (var prop in options) {
+      if (options.hasOwnProperty(prop)) {
         this.options[prop] = options[prop];
+      }
     }
 
     this.elements = elements;

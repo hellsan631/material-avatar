@@ -25,7 +25,12 @@
 
     this.name = 'MaterialAvatar';
 
-    this.options.extend(options);
+    for (var prop in options) {
+      if (options.hasOwnProperty(prop)) {
+        this.options[prop] = options[prop];
+      }
+    }
+
     this.elements = elements;
     var _this = this;
 
@@ -238,13 +243,5 @@
       });
     };
   }
-
-  Object.prototype.extend = function(obj) {
-    for (var i in obj) {
-      if (obj.hasOwnProperty(i)) {
-         this[i] = obj[i];
-      }
-    }
-  };
 
 })(window, document);

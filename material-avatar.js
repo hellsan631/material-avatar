@@ -10,6 +10,8 @@
       throw(new Error('No elements selected/found'));
     }
 
+    var _this = this;
+
     this.options = {
       colorPalette: [
         '#1abc9c', '#2ecc71', '#3498db',
@@ -25,14 +27,8 @@
 
     this.name = 'MaterialAvatar';
 
-    for (var prop in options) {
-      if (options.hasOwnProperty(prop)) {
-        this.options[prop] = options[prop];
-      }
-    }
-
+    extend(_this.options, options);
     this.elements = elements;
-    var _this = this;
 
     if (this.elements[0]) {
 
@@ -234,7 +230,7 @@
   // export
   win.MaterialAvatar  = MaterialAvatar;
 
-  if (jQuery && jQuery.fn) {
+  if (typeof jQuery !== 'undefined' && typeof jQuery.fn !== 'undefined') {
     jQuery.fn.materialAvatar = function(options) {
       return this.each(function() {
         if (!jQuery.data(this, 'plugin_materialAvatar')) {
@@ -242,6 +238,14 @@
         }
       });
     };
+  }
+
+  function extend(_this, obj) {
+    for (var i in obj) {
+      if (obj.hasOwnProperty(i)) {
+         _this[i] = obj[i];
+      }
+    }
   }
 
 })(window, document);

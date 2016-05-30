@@ -57,7 +57,7 @@ Material-Avatar uses HTML5 Canvas to fill an element with a random(ized) backgro
 > __EffectName:__ "default" _(type)_<br/>
 >	Description
 
-1. __Shape__ "square" _(string)_ <br/>
+1. __shape__ "square" _(string)_ <br/>
 Can either be "circle" or "square", and will take that shape (more shapes in future updates!)
 
 2. __randomColor__ _(object)_ <br/>

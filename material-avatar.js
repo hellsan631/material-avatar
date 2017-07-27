@@ -224,7 +224,7 @@
       }
     }
 
-    return this.options.colorPalette[index % this.options.colorPalette.length];
+    return this.options.colorPalette[Math.abs(index) % this.options.colorPalette.length];
   };
 
   // export

@@ -1,3 +1,9 @@
+/**
+ * Material-Avatar v0.3.6
+ * @author Mathew Kleppin <matkle414@gmail.com>
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
+
 ;(function(win, doc) {
 
   /**
